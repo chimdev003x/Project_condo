@@ -1,0 +1,231 @@
+:root {
+  --primary: #0b6f6f;
+  --secondary: #1faf9c;
+  --mint: #a8e6d1;
+  --accent: #d8b95a;
+  --background: #f7faf9;
+  --white: #ffffff;
+  --text-dark: #073b3a;
+  --text-charcoal: #1f2937;
+  --muted: #64706f;
+  --line: #e6efed;
+  --shadow: 0 16px 36px rgba(7, 59, 58, 0.09);
+  --shadow-hover: 0 24px 58px rgba(7, 59, 58, 0.16);
+  --container-width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-charcoal);
+  font-family: "K2D", "Noto Sans Thai", "Segoe UI", Tahoma, sans-serif;
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(216, 185, 90, 0.35);
+}
+
+app-root {
+  display: block;
+  min-height: 100vh;
+}
+
+.container-custom {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--container-width);
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.bg-background {
+  background: var(--background);
+}
+
+.bg-white {
+  background: var(--white);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-text-dark {
+  color: var(--text-dark);
+}
+
+.text-text-charcoal {
+  color: var(--text-charcoal);
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow);
+}
+
+.page-hero p {
+  display: block !important;
+  line-height: 1.2 !important;
+  margin-bottom: 32px !important;
+  min-height: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero h1 {
+  clear: both;
+  padding-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content .eyebrow {
+  display: block !important;
+  margin-bottom: 28px !important;
+}
+
+.page-hero,
+.hero-content,
+.content-shell,
+.project-grid,
+.package-grid,
+.blog-grid,
+.contact-page,
+.detail-layout,
+.post-card,
+.register-card,
+.profile-card,
+.my-page .page-head {
+  animation: fade-up 0.55s ease both;
+}
+
+.filter-card,
+.result-toolbar,
+.project-card,
+.package-card,
+.blog-card,
+.contact-form,
+.contact-info,
+.summary-card,
+.info-card,
+.contact-card,
+.profile-card,
+.empty-state,
+.property-card {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease,
+    color 0.22s ease;
+}
+
+.project-card:hover,
+.blog-card:hover,
+.contact-card:hover,
+.summary-card:hover,
+.info-card:hover,
+.profile-card:hover,
+.filter-card:hover,
+.result-toolbar:hover {
+  border-color: rgba(11, 111, 111, 0.28);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+
+input,
+select,
+textarea {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+select {
+  appearance: none;
+  background-color: #fff !important;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--primary) 50%),
+    linear-gradient(135deg, var(--primary) 50%, transparent 50%),
+    linear-gradient(to right, rgba(11, 111, 111, 0.14), rgba(11, 111, 111, 0.14)) !important;
+  background-position:
+    calc(100% - 20px) 50%,
+    calc(100% - 14px) 50%,
+    calc(100% - 42px) 50% !important;
+  background-repeat: no-repeat !important;
+  background-size: 6px 6px, 6px 6px, 1px 24px !important;
+  cursor: pointer;
+  padding-right: 52px !important;
+}
+
+select:hover {
+  border-color: rgba(11, 111, 111, 0.45) !important;
+  box-shadow: 0 10px 22px rgba(7, 59, 58, 0.08);
+}
+
+button,
+a {
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+button:active,
+a:active {
+  transform: translateY(1px);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .container-custom {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
