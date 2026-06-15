@@ -1,6 +1,6 @@
 # Condo Finder Laravel
 
-เว็บประกาศซื้อ/เช่าคอนโดเวอร์ชัน Laravel ใช้ Blade + SQLite สำหรับเริ่มพัฒนาในเครื่อง
+เว็บประกาศซื้อ/เช่าคอนโดเวอร์ชัน Laravel ใช้ Blade + SQLite สำหรับพัฒนาในเครื่อง
 
 ## Requirements
 
@@ -23,6 +23,13 @@ php artisan serve
 http://127.0.0.1:8000
 ```
 
+บัญชีทดสอบ:
+
+```text
+owner@example.com
+password123
+```
+
 ## Pages
 
 - `/` หน้าแรก
@@ -31,6 +38,11 @@ http://127.0.0.1:8000
 - `/properties/{id}` รายละเอียดประกาศ
 - `/projects` โครงการใหม่
 - `/packages` แพ็กเกจ
+- `/post-property` ลงประกาศ
+- `/my-listings` ประกาศของฉัน
+- `/account` บัญชีของฉัน
+- `/login` เข้าสู่ระบบ
+- `/register` สมัครสมาชิก
 - `/blog` บทความ
 - `/contact` ติดต่อเรา
 

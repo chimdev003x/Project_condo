@@ -22,6 +22,20 @@ class ExampleTest extends TestCase
     {
         $response = $this->getJson('/api/properties');
 
-        $response->assertOk()->assertJsonCount(3);
+        $response->assertOk()->assertJsonCount(6);
+    }
+
+    public function test_public_requirement_pages_render(): void
+    {
+        foreach (['/buy', '/rent', '/projects', '/packages', '/blog', '/contact', '/login', '/register'] as $path) {
+            $this->get($path)->assertOk();
+        }
+    }
+
+    public function test_protected_listing_pages_redirect_guests(): void
+    {
+        foreach (['/post-property', '/my-listings', '/account'] as $path) {
+            $this->get($path)->assertRedirect('/login');
+        }
     }
 }

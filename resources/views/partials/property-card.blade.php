@@ -1,4 +1,4 @@
-<article class="card">
+<article class="card property-card">
     <img src="{{ $property->cover_image }}" alt="{{ $property->title }}">
     <div class="card-body">
         @if($property->badge)
@@ -10,10 +10,10 @@
         </div>
         <p class="muted">{{ $property->project_name }} · {{ $property->location }}</p>
         <div class="meta">
-            <span>{{ $property->bedrooms }} ห้องนอน</span>
-            <span>{{ $property->bathrooms }} ห้องน้ำ</span>
-            <span>{{ number_format($property->area) }} ตร.ม.</span>
+            <span>▣ {{ $property->bedrooms }} ห้องนอน</span>
+            <span>▤ {{ $property->bathrooms }} ห้องน้ำ</span>
+            <span>□ {{ number_format($property->area) }} ตร.ม.</span>
         </div>
-        <p><a class="btn outline" href="{{ route('properties.show', $property->id) }}">ดูรายละเอียด</a></p>
+        <p class="card-action"><a class="btn outline" href="{{ route('properties.show', $property->id) }}">ดูรายละเอียด</a></p>
     </div>
 </article>

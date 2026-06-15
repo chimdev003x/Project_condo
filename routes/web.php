@@ -9,8 +9,20 @@ Route::get('/rent', [CondoController::class, 'listings'])->defaults('type', 'ren
 Route::get('/properties/{id}', [CondoController::class, 'property'])->name('properties.show');
 Route::get('/projects', [CondoController::class, 'projects'])->name('projects');
 Route::get('/packages', [CondoController::class, 'packages'])->name('packages');
+Route::post('/packages/{id}/select', [CondoController::class, 'selectPackage'])->name('packages.select');
 Route::get('/blog', [CondoController::class, 'blog'])->name('blog');
 Route::get('/contact', [CondoController::class, 'contact'])->name('contact');
+Route::post('/contact', [CondoController::class, 'storeInquiry'])->name('contact.store');
+
+Route::get('/login', [CondoController::class, 'login'])->name('login');
+Route::post('/login', [CondoController::class, 'authenticate'])->name('login.store');
+Route::post('/logout', [CondoController::class, 'logout'])->name('logout');
+Route::get('/register', [CondoController::class, 'register'])->name('register');
+Route::post('/register', [CondoController::class, 'storeRegister'])->name('register.store');
+Route::get('/post-property', [CondoController::class, 'postProperty'])->name('post-property');
+Route::post('/post-property', [CondoController::class, 'storeProperty'])->name('post-property.store');
+Route::get('/my-listings', [CondoController::class, 'myListings'])->name('my-listings');
+Route::get('/account', [CondoController::class, 'account'])->name('account');
 
 Route::prefix('api')->group(function () {
     Route::get('/health', fn () => response()->json(['ok' => true]));

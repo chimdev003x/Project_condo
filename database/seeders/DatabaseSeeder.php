@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,33 +33,49 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('projects')->upsert([
-            ['id' => 'p1', 'name' => 'The Line Sukhumvit 101', 'developer' => 'Sansiri', 'location' => 'สุขุมวิท 101', 'starting_price' => 4200000, 'status' => 'Ready to move', 'image_url' => 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80', 'description' => 'โครงการพร้อมอยู่ ใกล้ BTS ปุณณวิถี พร้อมพื้นที่ส่วนกลางครบ', 'created_at' => $now, 'updated_at' => $now],
-            ['id' => 'p2', 'name' => 'Life Asoke Rama 9', 'developer' => 'AP Thailand', 'location' => 'พระราม 9', 'starting_price' => 4800000, 'status' => 'Ready to move', 'image_url' => 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80', 'description' => 'คอนโดใจกลาง New CBD เชื่อมต่อ MRT และแหล่งงานสำคัญ', 'created_at' => $now, 'updated_at' => $now],
-            ['id' => 'p3', 'name' => 'Origin Plug & Play Ramintra', 'developer' => 'Origin Property', 'location' => 'รามอินทรา', 'starting_price' => 2990000, 'status' => 'Under construction', 'image_url' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', 'description' => 'โครงการใหม่พร้อมฟังก์ชันสำหรับคนทำงานยุคใหม่', 'created_at' => $now, 'updated_at' => $now],
+            ['id' => 'p1', 'name' => 'The Line Sukhumvit 101', 'developer' => 'Sansiri', 'location' => 'สุขุมวิท 101', 'starting_price' => 4200000, 'status' => 'พร้อมอยู่', 'image_url' => 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80', 'description' => 'โครงการพร้อมอยู่ ใกล้ BTS ปุณณวิถี พร้อมพื้นที่ส่วนกลางครบ', 'created_at' => $now, 'updated_at' => $now],
+            ['id' => 'p2', 'name' => 'Life Asoke Rama 9', 'developer' => 'AP Thailand', 'location' => 'พระราม 9', 'starting_price' => 4800000, 'status' => 'พร้อมอยู่', 'image_url' => 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80', 'description' => 'คอนโดใจกลาง New CBD เชื่อมต่อ MRT และแหล่งงานสำคัญ', 'created_at' => $now, 'updated_at' => $now],
+            ['id' => 'p3', 'name' => 'Origin Plug & Play Ramintra', 'developer' => 'Origin Property', 'location' => 'รามอินทรา', 'starting_price' => 2990000, 'status' => 'กำลังก่อสร้าง', 'image_url' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', 'description' => 'โครงการใหม่พร้อมฟังก์ชันสำหรับคนทำงานยุคใหม่', 'created_at' => $now, 'updated_at' => $now],
         ], ['id']);
 
+        DB::table('users')->upsert([
+            ['id' => 1, 'name' => 'Demo Owner', 'email' => 'owner@example.com', 'password' => Hash::make('password123'), 'created_at' => $now, 'updated_at' => $now],
+        ], ['email']);
+
         DB::table('properties')->upsert([
-            ['id' => '1', 'project_id' => 'p1', 'title' => 'ห้องวิวเมือง แต่งครบ ใกล้ BTS ปุณณวิถี', 'project_name' => 'The Line Sukhumvit 101', 'location' => 'สุขุมวิท', 'price' => 4500000, 'type' => 'sell', 'bedrooms' => 1, 'bathrooms' => 1, 'area' => 32, 'floor' => 24, 'description' => 'คอนโดพร้อมอยู่ เดินทางสะดวก เหมาะสำหรับอยู่อาศัยและลงทุนปล่อยเช่า', 'contact_name' => 'คุณสมชาย', 'contact_phone' => '081-234-5678', 'contact_line' => null, 'badge' => 'แนะนำ', 'is_promoted' => true, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
-            ['id' => '2', 'project_id' => 'p2', 'title' => 'ห้องมุม New CBD พร้อมเฟอร์นิเจอร์', 'project_name' => 'Life Asoke Rama 9', 'location' => 'พระราม 9', 'price' => 5200000, 'type' => 'sell', 'bedrooms' => 1, 'bathrooms' => 1, 'area' => 35, 'floor' => 31, 'description' => 'ทำเลศูนย์กลางธุรกิจใหม่ ใกล้ MRT พระราม 9 และห้างหลักของย่าน', 'contact_name' => 'คุณวิไล', 'contact_phone' => '089-876-5432', 'contact_line' => null, 'badge' => 'ขาย', 'is_promoted' => false, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
-            ['id' => '3', 'project_id' => null, 'title' => 'ให้เช่าห้องวิวแม่น้ำ ชั้นสูง พร้อมเข้าอยู่', 'project_name' => 'Rhythm Sathorn', 'location' => 'สาทร', 'price' => 25000, 'type' => 'rent', 'bedrooms' => 1, 'bathrooms' => 1, 'area' => 38, 'floor' => 29, 'description' => 'ห้องตกแต่งครบ วิวแม่น้ำ เดินทางสะดวก ใกล้ BTS สะพานตากสิน', 'contact_name' => 'Agent Nan', 'contact_phone' => '083-456-7890', 'contact_line' => null, 'badge' => 'เช่าดี', 'is_promoted' => false, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['id' => '1', 'owner_id' => 1, 'project_id' => 'p1', 'title' => 'ห้องวิวเมือง แต่งครบ ใกล้ BTS ปุณณวิถี', 'project_name' => 'The Line Sukhumvit 101', 'location' => 'สุขุมวิท', 'price' => 4500000, 'type' => 'sell', 'bedrooms' => 1, 'bathrooms' => 1, 'area' => 32, 'floor' => 24, 'description' => 'คอนโดพร้อมอยู่ เดินทางสะดวก เหมาะสำหรับอยู่อาศัยและลงทุนปล่อยเช่า', 'contact_name' => 'คุณสมชาย', 'contact_phone' => '081-234-5678', 'contact_line' => null, 'badge' => 'แนะนำ', 'is_promoted' => true, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['id' => '2', 'owner_id' => 1, 'project_id' => 'p2', 'title' => 'ห้องมุม New CBD พร้อมเฟอร์นิเจอร์', 'project_name' => 'Life Asoke Rama 9', 'location' => 'พระราม 9', 'price' => 5200000, 'type' => 'sell', 'bedrooms' => 1, 'bathrooms' => 1, 'area' => 35, 'floor' => 31, 'description' => 'ทำเลศูนย์กลางธุรกิจใหม่ ใกล้ MRT พระราม 9 และห้างหลักของย่าน', 'contact_name' => 'คุณวิไล', 'contact_phone' => '089-876-5432', 'contact_line' => null, 'badge' => 'ขาย', 'is_promoted' => false, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['id' => '3', 'owner_id' => 1, 'project_id' => null, 'title' => 'ให้เช่าห้องวิวแม่น้ำ ชั้นสูง พร้อมเข้าอยู่', 'project_name' => 'Rhythm Sathorn', 'location' => 'สาทร', 'price' => 25000, 'type' => 'rent', 'bedrooms' => 1, 'bathrooms' => 1, 'area' => 38, 'floor' => 29, 'description' => 'ห้องตกแต่งครบ วิวแม่น้ำ เดินทางสะดวก ใกล้ BTS สะพานตากสิน', 'contact_name' => 'Agent Nan', 'contact_phone' => '083-456-7890', 'contact_line' => null, 'badge' => 'เช่าดี', 'is_promoted' => false, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['id' => '4', 'owner_id' => 1, 'project_id' => null, 'title' => 'คอนโด 2 ห้องนอน ใกล้ BTS อนุสาวรีย์ชัย', 'project_name' => 'Ideo Q Victory', 'location' => 'พญาไท', 'price' => 8900000, 'type' => 'sell', 'bedrooms' => 2, 'bathrooms' => 1, 'area' => 48, 'floor' => 18, 'description' => 'ห้องกว้าง แปลนดี ใกล้รถไฟฟ้า เหมาะกับครอบครัวขนาดเล็ก', 'contact_name' => 'คุณกิตติ', 'contact_phone' => '082-345-6789', 'contact_line' => null, 'badge' => 'Hot', 'is_promoted' => true, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['id' => '5', 'owner_id' => 1, 'project_id' => null, 'title' => 'ห้องสวยใจกลางอารีย์ ใกล้คาเฟ่และรถไฟฟ้า', 'project_name' => 'Noble Around Ari', 'location' => 'อารีย์', 'price' => 7500000, 'type' => 'sell', 'bedrooms' => 1, 'bathrooms' => 1, 'area' => 30, 'floor' => 16, 'description' => 'ทำเลไลฟ์สไตล์ยอดนิยม เดินทางง่าย ใกล้ BTS อารีย์', 'contact_name' => 'คุณปาน', 'contact_phone' => '084-567-8901', 'contact_line' => null, 'badge' => 'แนะนำ', 'is_promoted' => true, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['id' => '6', 'owner_id' => 1, 'project_id' => null, 'title' => 'ให้เช่าห้องอบอุ่นในโครงการ T77', 'project_name' => 'The Base Park West', 'location' => 'อ่อนนุช', 'price' => 15000, 'type' => 'rent', 'bedrooms' => 1, 'bathrooms' => 1, 'area' => 28, 'floor' => 12, 'description' => 'ห้องแต่งครบ บรรยากาศร่มรื่น ในโครงการที่มีร้านค้าและพื้นที่ส่วนกลางครบ', 'contact_name' => 'คุณต้น', 'contact_phone' => '086-789-0123', 'contact_line' => null, 'badge' => 'เช่า', 'is_promoted' => false, 'is_published' => true, 'created_at' => $now, 'updated_at' => $now],
         ], ['id']);
 
         DB::table('property_images')->insertOrIgnore([
             ['property_id' => '1', 'image_url' => 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80', 'alt_text' => 'Condo exterior', 'sort_order' => 1],
             ['property_id' => '2', 'image_url' => 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80', 'alt_text' => 'Bright bedroom', 'sort_order' => 1],
             ['property_id' => '3', 'image_url' => 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80', 'alt_text' => 'Rental room', 'sort_order' => 1],
+            ['property_id' => '4', 'image_url' => 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1200&q=80', 'alt_text' => 'Two bedroom condo', 'sort_order' => 1],
+            ['property_id' => '5', 'image_url' => 'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=1200&q=80', 'alt_text' => 'Ari condo', 'sort_order' => 1],
+            ['property_id' => '6', 'image_url' => 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80', 'alt_text' => 'Rental condo', 'sort_order' => 1],
         ]);
 
         DB::table('property_amenities')->insertOrIgnore([
             ['property_id' => '1', 'amenity' => 'สระว่ายน้ำ'], ['property_id' => '1', 'amenity' => 'ฟิตเนส'], ['property_id' => '1', 'amenity' => 'Co-working space'],
             ['property_id' => '2', 'amenity' => 'Sky Lounge'], ['property_id' => '2', 'amenity' => 'สระว่ายน้ำ'], ['property_id' => '2', 'amenity' => 'ฟิตเนส'],
             ['property_id' => '3', 'amenity' => 'สระว่ายน้ำดาดฟ้า'], ['property_id' => '3', 'amenity' => 'Sky Garden'], ['property_id' => '3', 'amenity' => 'ฟิตเนส'],
+            ['property_id' => '4', 'amenity' => 'Lobby'], ['property_id' => '4', 'amenity' => 'ฟิตเนส'], ['property_id' => '4', 'amenity' => 'ที่จอดรถ'],
+            ['property_id' => '5', 'amenity' => 'สวนส่วนกลาง'], ['property_id' => '5', 'amenity' => 'ห้องประชุม'], ['property_id' => '5', 'amenity' => 'สระว่ายน้ำ'],
+            ['property_id' => '6', 'amenity' => 'Shuttle service'], ['property_id' => '6', 'amenity' => 'พื้นที่สีเขียว'], ['property_id' => '6', 'amenity' => 'ร้านค้าในโครงการ'],
         ]);
 
         DB::table('property_nearby_places')->insertOrIgnore([
             ['property_id' => '1', 'place_name' => 'BTS ปุณณวิถี'], ['property_id' => '1', 'place_name' => 'True Digital Park'],
             ['property_id' => '2', 'place_name' => 'MRT พระราม 9'], ['property_id' => '2', 'place_name' => 'Central Rama 9'],
             ['property_id' => '3', 'place_name' => 'BTS สะพานตากสิน'], ['property_id' => '3', 'place_name' => 'ICONSIAM'],
+            ['property_id' => '4', 'place_name' => 'BTS อนุสาวรีย์ชัย'], ['property_id' => '4', 'place_name' => 'King Power'],
+            ['property_id' => '5', 'place_name' => 'BTS อารีย์'], ['property_id' => '5', 'place_name' => 'La Villa Ari'],
+            ['property_id' => '6', 'place_name' => 'BTS อ่อนนุช'], ['property_id' => '6', 'place_name' => 'Habito Mall'],
         ]);
 
         DB::table('blogs')->upsert([
