@@ -3,10 +3,10 @@
 @section('title', 'แพ็กเกจ | Condo Finder')
 
 @section('content')
-<section class="hero-sub">
+<section class="hero-sub package-hero">
     <div class="container">
         <div class="eyebrow">Packages</div>
-        <h1>เลือกแพ็กเกจที่เหมาะกับคุณ</h1>
+        <h1>เลือกแพ็กเกจลงประกาศ</h1>
         <p>จัดการประกาศขายหรือเช่าคอนโดได้ตามจำนวนรายการและระยะเวลาที่ต้องการ</p>
     </div>
 </section>

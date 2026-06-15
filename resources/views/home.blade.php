@@ -19,11 +19,11 @@
         </div>
         <div class="search-grid home-search">
             <div>
-                <label>⌖ ทำเล / BTS / MRT / ชื่อโครงการ</label>
+                <label>ทำเล / BTS / MRT / ชื่อโครงการ</label>
                 <input name="location" placeholder="เช่น สุขุมวิท, อารีย์, พระราม 9">
             </div>
             <div>
-                <label>▤ ช่วงราคา</label>
+                <label>ช่วงราคา</label>
                 <select name="price_range">
                     <option value="">ทุกช่วงราคา</option>
                     <option value="0-5000000">ไม่เกิน 5 ล้าน</option>
@@ -32,7 +32,7 @@
                 </select>
             </div>
             <div>
-                <label>▣ ห้องนอน</label>
+                <label>ห้องนอน</label>
                 <select name="bedrooms">
                     <option value="">ทั้งหมด</option>
                     <option value="1">1 ห้องนอน</option>
@@ -40,7 +40,7 @@
                     <option value="3">3 ห้องนอนขึ้นไป</option>
                 </select>
             </div>
-            <button class="btn search-btn" type="submit">⌕ ค้นหา</button>
+            <button class="btn search-btn" type="submit">ค้นหา</button>
         </div>
     </form>
 
@@ -100,7 +100,9 @@
         <div class="grid">
             @foreach($projects as $project)
                 <article class="card">
-                    <img src="{{ $project->image_url }}" alt="{{ $project->name }}">
+                    <a class="card-media" href="{{ route('projects') }}">
+                        <img src="{{ $project->image_url }}" alt="{{ $project->name }}">
+                    </a>
                     <div class="card-body">
                         <span class="badge">{{ $project->status }}</span>
                         <h3>{{ $project->name }}</h3>
@@ -122,10 +124,10 @@
             </div>
         </div>
         <div class="why-grid">
-            <div class="feature-box"><strong>⌕ ค้นหาละเอียด</strong><p class="muted">กรองทำเล ราคา ห้องนอน และเรียงผลลัพธ์ได้ทันที</p></div>
-            <div class="feature-box"><strong>▣ ข้อมูลครบ</strong><p class="muted">ดูราคา พื้นที่ ชั้น สิ่งอำนวยความสะดวก และสถานที่ใกล้เคียง</p></div>
-            <div class="feature-box"><strong>◇ โครงการใหม่</strong><p class="muted">รวมโครงการพร้อมอยู่และกำลังก่อสร้างจาก Developer ชั้นนำ</p></div>
-            <div class="feature-box"><strong>+ ลงประกาศง่าย</strong><p class="muted">เลือกแพ็กเกจ สมัครสมาชิก แล้วลงประกาศได้ด้วยฟอร์มเดียว</p></div>
+            <div class="feature-box"><strong>ค้นหาละเอียด</strong><p class="muted">กรองทำเล ราคา ห้องนอน และเรียงผลลัพธ์ได้ทันที</p></div>
+            <div class="feature-box"><strong>ข้อมูลครบ</strong><p class="muted">ดูราคา พื้นที่ ชั้น สิ่งอำนวยความสะดวก และสถานที่ใกล้เคียง</p></div>
+            <div class="feature-box"><strong>โครงการใหม่</strong><p class="muted">รวมโครงการพร้อมอยู่และกำลังก่อสร้างจาก Developer ชั้นนำ</p></div>
+            <div class="feature-box"><strong>ลงประกาศง่าย</strong><p class="muted">เลือกแพ็กเกจ สมัครสมาชิก แล้วลงประกาศได้ด้วยฟอร์มเดียว</p></div>
         </div>
     </div>
 </section>
