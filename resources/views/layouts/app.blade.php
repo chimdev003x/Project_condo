@@ -25,14 +25,19 @@
             </label>
 
             <div class="nav-panel">
+                <div class="mobile-menu-head">
+                    <strong>เมนู</strong>
+                    <span>Condo Finder</span>
+                </div>
+
                 <nav class="menu" aria-label="เมนูหลัก">
-                    <a href="{{ route('home') }}"><span class="nav-icon"><i class="fi fi-br-home"></i></span> หน้าแรก</a>
-                    <a href="{{ route('buy') }}"><span class="nav-icon"><i class="fi fi-br-building"></i></span> ซื้อคอนโด</a>
-                    <a href="{{ route('rent') }}"><span class="nav-icon"><i class="fi fi-br-key"></i></span> เช่าคอนโด</a>
-                    <a href="{{ route('projects') }}"><span class="nav-icon"><i class="fi fi-br-city"></i></span> โครงการใหม่</a>
-                    <a href="{{ route('packages') }}"><span class="nav-icon"><i class="fi fi-br-box-open"></i></span> แพ็กเกจ</a>
-                    <a href="{{ route('blog') }}"><span class="nav-icon"><i class="fi fi-br-newspaper"></i></span> บทความ</a>
-                    <a href="{{ route('contact') }}"><span class="nav-icon"><i class="fi fi-br-phone-call"></i></span> ติดต่อเรา</a>
+                    <a href="{{ route('home') }}"><span class="nav-icon"><i class="fi fi-br-home"></i></span><span class="menu-text">หน้าแรก</span><i class="fi fi-br-angle-small-right menu-arrow"></i></a>
+                    <a href="{{ route('buy') }}"><span class="nav-icon"><i class="fi fi-br-building"></i></span><span class="menu-text">ซื้อคอนโด</span><i class="fi fi-br-angle-small-right menu-arrow"></i></a>
+                    <a href="{{ route('rent') }}"><span class="nav-icon"><i class="fi fi-br-key"></i></span><span class="menu-text">เช่าคอนโด</span><i class="fi fi-br-angle-small-right menu-arrow"></i></a>
+                    <a href="{{ route('projects') }}"><span class="nav-icon"><i class="fi fi-br-city"></i></span><span class="menu-text">โครงการใหม่</span><i class="fi fi-br-arrow-right menu-arrow"></i></a>
+                    <a href="{{ route('packages') }}"><span class="nav-icon"><i class="fi fi-br-box-open"></i></span><span class="menu-text">แพ็กเกจ</span><i class="fi fi-br-angle-small-right menu-arrow"></i></a>
+                    <a href="{{ route('blog') }}"><span class="nav-icon"><i class="fi fi-br-newspaper"></i></span><span class="menu-text">บทความ</span><i class="fi fi-br-arrow-right menu-arrow"></i></a>
+                    <a href="{{ route('contact') }}"><span class="nav-icon"><i class="fi fi-br-phone-call"></i></span><span class="menu-text">ติดต่อเรา</span><i class="fi fi-br-angle-small-right menu-arrow"></i></a>
                 </nav>
 
                 <div class="auth">
