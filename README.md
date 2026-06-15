@@ -1,19 +1,19 @@
-# Condo Finder
+# Condo Finder Laravel
 
-โปรเจกต์เว็บประกาศซื้อ/เช่าคอนโด มีทั้งเวอร์ชันเดิม Angular และเวอร์ชันใหม่ Laravel
+เว็บประกาศซื้อ/เช่าคอนโดเวอร์ชัน Laravel ใช้ Blade + SQLite สำหรับเริ่มพัฒนาในเครื่อง
 
-## Laravel version
+## Requirements
 
-Laravel app อยู่ในโฟลเดอร์:
+- PHP 8.4+
+- Composer
 
-```bash
-laravel-condofinder
-```
-
-รัน local:
+## Run Locally
 
 ```bash
-cd laravel-condofinder
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate:fresh --seed
 php artisan serve
 ```
 
@@ -23,36 +23,30 @@ php artisan serve
 http://127.0.0.1:8000
 ```
 
-รีเซ็ตฐานข้อมูล SQLite และใส่ข้อมูลตัวอย่าง:
+## Pages
+
+- `/` หน้าแรก
+- `/buy` ซื้อคอนโด
+- `/rent` เช่าคอนโด
+- `/properties/{id}` รายละเอียดประกาศ
+- `/projects` โครงการใหม่
+- `/packages` แพ็กเกจ
+- `/blog` บทความ
+- `/contact` ติดต่อเรา
+
+## API
+
+- `GET /api/health`
+- `GET /api/properties`
+- `GET /api/properties/{id}`
+- `GET /api/projects`
+- `GET /api/packages`
+- `GET /api/blogs`
+- `POST /api/inquiries`
+
+## Tests
 
 ```bash
-php artisan migrate:fresh --seed
-```
-
-API ตัวอย่าง:
-
-```text
-GET /api/health
-GET /api/properties
-GET /api/projects
-GET /api/packages
-GET /api/blogs
-POST /api/inquiries
-```
-
-## Angular version
-
-โค้ด Angular เดิมยังอยู่ที่ `src/` เพื่อใช้เทียบหน้าตาและย้าย feature เพิ่มเติมต่อได้
-
-```bash
-npm start
-```
-
-## Cloudflare
-
-เอกสาร Cloudflare เดิมอยู่ที่:
-
-```bash
-docs/cloudflare-deployment.md
-docs/cloudflare-d1-schema.md
+php artisan test
+vendor/bin/pint --test
 ```
