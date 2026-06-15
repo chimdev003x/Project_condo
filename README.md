@@ -1,59 +1,58 @@
-# CondoFinder
+# Condo Finder
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.1.
+โปรเจกต์เว็บประกาศซื้อ/เช่าคอนโด มีทั้งเวอร์ชันเดิม Angular และเวอร์ชันใหม่ Laravel
 
-## Development server
+## Laravel version
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Laravel app อยู่ในโฟลเดอร์:
 
 ```bash
-ng generate component component-name
+laravel-condofinder
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+รัน local:
 
 ```bash
-ng generate --help
+cd laravel-condofinder
+php artisan serve
 ```
 
-## Building
+เปิดเว็บ:
 
-To build the project run:
+```text
+http://127.0.0.1:8000
+```
+
+รีเซ็ตฐานข้อมูล SQLite และใส่ข้อมูลตัวอย่าง:
 
 ```bash
-ng build
+php artisan migrate:fresh --seed
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+API ตัวอย่าง:
 
-## Running unit tests
+```text
+GET /api/health
+GET /api/properties
+GET /api/projects
+GET /api/packages
+GET /api/blogs
+POST /api/inquiries
+```
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Angular version
+
+โค้ด Angular เดิมยังอยู่ที่ `src/` เพื่อใช้เทียบหน้าตาและย้าย feature เพิ่มเติมต่อได้
 
 ```bash
-ng test
+npm start
 ```
 
-## Running end-to-end tests
+## Cloudflare
 
-For end-to-end (e2e) testing, run:
+เอกสาร Cloudflare เดิมอยู่ที่:
 
 ```bash
-ng e2e
+docs/cloudflare-deployment.md
+docs/cloudflare-d1-schema.md
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
