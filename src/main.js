@@ -790,7 +790,7 @@ function enhanceSelects() {
 }
 
 function comingSoon(label) {
-  return `<section class="coming"><span class="eyebrow">${escapeHtml(label)}</span><h1>แล้วพบกันเร็ว ๆ นี้</h1><p>เมนูนี้ถูกปิดไว้ชั่วคราวโดยผู้ดูแลระบบ</p></section>`;
+  return `<section class="coming-soon-section"><div class="container"><div class="coming-soon-card"><div class="coming-soon-icon" aria-hidden="true"><i class="fi fi-br-time-forward"></i></div><span class="eyebrow">${escapeHtml(label)}</span><h1>แล้วพบกันเร็ว ๆ นี้</h1><p>เมนูนี้ถูกปิดไว้ชั่วคราวโดยผู้ดูแลระบบ</p><div class="coming-soon-actions"><a class="btn" href="/" data-link><i class="fi fi-br-home"></i> กลับหน้าแรก</a></div></div></div></section>`;
 }
 
 async function handleForm(form) {

@@ -468,7 +468,9 @@ button, input, select, textarea { font-family: inherit; }
 }
 
 .coming-soon-card {
+    width: min(100%, 760px);
     max-width: 760px;
+    margin-inline: auto;
     padding: 42px;
     border: 1px solid var(--line);
     border-radius: 20px;
