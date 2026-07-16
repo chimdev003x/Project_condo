@@ -62,6 +62,44 @@ function isAdmin() {
   return Number(state.profile?.user_level) === 3;
 }
 
+function menuByKey(key) {
+  return state.menus.find((item) => item.key === key);
+}
+
+async function disabledMenuForRoute(current) {
+  const directMenu = state.menus.find((item) => item.path === current);
+  if (directMenu && !directMenu.is_enabled) return directMenu;
+
+  if (current.startsWith('/properties/')) {
+    const propertyId = current.split('/').filter(Boolean).pop();
+    const { data } = await supabase
+      .from('properties')
+      .select('type')
+      .eq('id', propertyId)
+      .maybeSingle();
+    if (!data?.type) return null;
+    const parentMenu = menuByKey(data?.type === 'rent' ? 'rent' : 'buy');
+    if (parentMenu && !parentMenu.is_enabled) return parentMenu;
+  }
+
+  return null;
+}
+
+function analyticsPageLabel(rawPath) {
+  const pathname = String(rawPath || '/').split('?')[0];
+  const menu = state.menus.find((item) => item.path === pathname);
+  if (menu) return menu.label;
+  if (pathname.startsWith('/properties/')) return 'รายละเอียดประกาศ';
+
+  return ({
+    '/login': 'เข้าสู่ระบบ',
+    '/register': 'สมัครสมาชิก',
+    '/post': 'ลงประกาศ',
+    '/my-listings': 'ประกาศของฉัน',
+    '/account': 'บัญชีของฉัน',
+  })[pathname] || 'หน้าอื่น ๆ';
+}
+
 function isLoggedIn() {
   return Boolean(state.session?.user);
 }
@@ -570,7 +608,10 @@ function adminDashboardPanel({ analytics, profiles, posts, projects, blogs }) {
   const monthAgo = Date.now() - 30 * 86400000;
   const newMembers = profiles.filter((profile) => new Date(profile.created_at).getTime() >= monthAgo).length;
   const topSearches = aggregateAnalytics(searches.filter((event) => event.search_query), (event) => event.search_query.trim().toLowerCase()).slice(0, 8);
-  const topPages = aggregateAnalytics(pageViews.filter((event) => !event.path.startsWith('/admin/')), (event) => event.path.split('?')[0]).slice(0, 6);
+  const topPages = aggregateAnalytics(
+    pageViews.filter((event) => !event.path.startsWith('/admin/')),
+    (event) => analyticsPageLabel(event.path),
+  ).slice(0, 6);
   const daily = Array.from({ length: 7 }, (_, index) => {
     const date = new Date(Date.now() - (6 - index) * 86400000);
     const key = date.toISOString().slice(0, 10);
@@ -585,7 +626,7 @@ function adminDashboardPanel({ analytics, profiles, posts, projects, blogs }) {
     ['chart-line-up', pageViews.length, 'การเปิดหน้าเว็บ'],
     ['search', searches.length, 'การค้นหาทั้งหมด'],
   ];
-  return `<div class="settings-panel admin-dashboard"><div class="settings-panel-head"><div><div class="eyebrow">Live Overview</div><h2>ข้อมูลภาพรวมเพื่อพัฒนาระบบ</h2><p>สถิติผู้เข้าชมใช้รหัสเซสชันแบบไม่ระบุตัวตน และเริ่มสะสมหลังเปิดใช้ระบบติดตามนี้</p></div></div><div class="admin-kpi-grid">${kpis.map(([icon, value, label]) => `<div class="admin-kpi"><i class="fi fi-br-${icon}"></i><strong>${money.format(value)}</strong><span>${label}</span></div>`).join('')}</div><div class="admin-analytics-grid"><section class="admin-data-section"><div class="admin-section-title"><div><h3>ผู้เข้าชม 7 วันล่าสุด</h3><p>จำนวนการเปิดหน้าเว็บรายวัน</p></div></div><div class="admin-bar-chart">${daily.map((item) => `<div><span style="height:${Math.max((item.count / maxDaily) * 100, 4)}%" title="${item.count} ครั้ง"></span><small>${item.label}</small><strong>${item.count}</strong></div>`).join('')}</div></section><section class="admin-data-section"><div class="admin-section-title"><div><h3>คำค้นหายอดนิยม</h3><p>ช่วยดูว่าผู้ใช้กำลังสนใจอะไร</p></div></div>${analyticsRanking(topSearches, 'ยังไม่มีข้อมูลคำค้นหา')}</section><section class="admin-data-section"><div class="admin-section-title"><div><h3>หน้าที่มีผู้เข้าชมสูง</h3><p>ไม่นับหน้าผู้ดูแลระบบ</p></div></div>${analyticsRanking(topPages, 'ยังไม่มีข้อมูลการเข้าชม')}</section><section class="admin-data-section"><div class="admin-section-title"><div><h3>สถานะเนื้อหา</h3><p>ข้อมูลที่พร้อมให้ผู้ใช้ค้นพบ</p></div></div><div class="admin-content-summary"><span><strong>${posts.filter((item) => item.is_published).length}</strong>ประกาศเผยแพร่</span><span><strong>${posts.filter((item) => item.is_promoted).length}</strong>ประกาศที่ดัน</span><span><strong>${projects.filter((item) => item.is_published).length}</strong>โครงการเผยแพร่</span><span><strong>${blogs.filter((item) => item.is_published).length}</strong>บทความเผยแพร่</span></div></section></div></div>`;
+  return `<div class="settings-panel admin-dashboard"><div class="settings-panel-head"><div><div class="eyebrow">Live Overview</div><h2>ข้อมูลภาพรวมเพื่อพัฒนาระบบ</h2><p>สถิติผู้เข้าชมใช้รหัสเซสชันแบบไม่ระบุตัวตน และเริ่มสะสมหลังเปิดใช้ระบบติดตามนี้</p></div></div><div class="admin-kpi-grid">${kpis.map(([icon, value, label]) => `<div class="admin-kpi"><i class="fi fi-br-${icon}"></i><strong>${money.format(value)}</strong><span>${label}</span></div>`).join('')}</div><div class="admin-analytics-grid"><section class="admin-data-section"><div class="admin-section-title"><div><h3>ผู้เข้าชม 7 วันล่าสุด</h3><p>จำนวนการเปิดหน้าเว็บรายวัน</p></div></div><div class="admin-bar-chart">${daily.map((item) => `<div><span style="height:${Math.max((item.count / maxDaily) * 100, 4)}%" title="${item.count} ครั้ง"></span><small>${item.label}</small><strong>${item.count}</strong></div>`).join('')}</div></section><section class="admin-data-section"><div class="admin-section-title"><div><h3>คำค้นหายอดนิยม</h3><p>ช่วยดูว่าผู้ใช้กำลังสนใจอะไร</p></div></div>${analyticsRanking(topSearches, 'ยังไม่มีข้อมูลคำค้นหา')}</section><section class="admin-data-section"><div class="admin-section-title"><div><h3>หน้าหรือเมนูที่มีผู้เข้าชมสูง</h3><p>แสดงเป็นชื่อหน้าและไม่นับหน้าผู้ดูแลระบบ</p></div></div>${analyticsRanking(topPages, 'ยังไม่มีข้อมูลการเข้าชม')}</section><section class="admin-data-section"><div class="admin-section-title"><div><h3>สถานะเนื้อหา</h3><p>ข้อมูลที่พร้อมให้ผู้ใช้ค้นพบ</p></div></div><div class="admin-content-summary"><span><strong>${posts.filter((item) => item.is_published).length}</strong>ประกาศเผยแพร่</span><span><strong>${posts.filter((item) => item.is_promoted).length}</strong>ประกาศที่ดัน</span><span><strong>${projects.filter((item) => item.is_published).length}</strong>โครงการเผยแพร่</span><span><strong>${blogs.filter((item) => item.is_published).length}</strong>บทความเผยแพร่</span></div></section></div></div>`;
 }
 
 function aggregateAnalytics(items, getKey) {
@@ -656,8 +697,8 @@ function empty(message) {
 async function render() {
   let content;
   const current = path();
-  const menu = state.menus.find((item) => item.path === current);
-  if (menu && !menu.is_enabled && !isAdmin()) content = comingSoon(menu.label);
+  const disabledMenu = await disabledMenuForRoute(current);
+  if (disabledMenu) content = comingSoon(disabledMenu.label);
   else if (current === '/') content = await pageHome();
   else if (current === '/buy') content = await pageListings('sell');
   else if (current === '/rent') content = await pageListings('rent');
@@ -749,7 +790,7 @@ function enhanceSelects() {
 }
 
 function comingSoon(label) {
-  return `<section class="coming"><span class="eyebrow">${escapeHtml(label)}</span><h1>โปรดติดตามเร็ว ๆ นี้</h1><p>เมนูนี้ถูกปิดไว้ชั่วคราวโดยผู้ดูแลระบบ</p></section>`;
+  return `<section class="coming"><span class="eyebrow">${escapeHtml(label)}</span><h1>แล้วพบกันเร็ว ๆ นี้</h1><p>เมนูนี้ถูกปิดไว้ชั่วคราวโดยผู้ดูแลระบบ</p></section>`;
 }
 
 async function handleForm(form) {
@@ -1408,10 +1449,16 @@ document.addEventListener('click', async (event) => {
 document.addEventListener('change', async (event) => {
   const menuToggle = event.target.closest('[data-menu-key]');
   if (menuToggle && isAdmin()) {
-    await supabase.from('site_menu_settings').update({ is_enabled: menuToggle.checked }).eq('key', menuToggle.dataset.menuKey);
+    const nextValue = menuToggle.checked;
+    const { error } = await supabase.from('site_menu_settings').update({ is_enabled: nextValue }).eq('key', menuToggle.dataset.menuKey);
+    if (error) {
+      menuToggle.checked = !nextValue;
+      toast(`บันทึกสถานะเมนูไม่สำเร็จ: ${error.message}`);
+      return;
+    }
     const { data } = await supabase.from('site_menu_settings').select('*').order('sort_order');
     state.menus = data || state.menus;
-    toast('บันทึกเมนูแล้ว');
+    toast(nextValue ? 'เปิดเมนูแล้ว' : 'ปิดเมนูแล้ว หน้านี้จะแสดงข้อความแล้วพบกันเร็ว ๆ นี้');
     render();
   }
   if (event.target.matches('[name="images"]')) {
